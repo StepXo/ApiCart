@@ -1,14 +1,16 @@
 package com.emazon.ApiCart.Domain.Model;
 
+import java.util.List;
+
 public class Cart {
     private long id;
-    private long itemId;
+    private List<Item> itemId;
     private long userId;
     private int quantity;
     private String actualizationDate;
     private String creationDate;
 
-    public Cart(long id, long itemId, long userId, int quantity, String actualizationDate, String creationDate) {
+    public Cart(long id, List<Item> itemId, long userId, int quantity, String actualizationDate, String creationDate) {
         this.id = id;
         this.itemId = itemId;
         this.userId = userId;
@@ -24,7 +26,7 @@ public class Cart {
         this.id = id;
     }
 
-    public void setItemId(long itemId) {
+    public void setItemId(List<Item> itemId) {
         this.itemId = itemId;
     }
 
@@ -48,7 +50,7 @@ public class Cart {
         return id;
     }
 
-    public long getItemId() {
+    public List<Item> getItemId() {
         return itemId;
     }
 
