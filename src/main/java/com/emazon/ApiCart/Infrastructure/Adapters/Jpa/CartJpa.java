@@ -21,8 +21,9 @@ public class CartJpa implements CartPersistencePort {
     }
 
     @Override
-    public Cart deleteFromCart(long itemId) {
-        CartEntity cart = cartRepository.findByItemId(itemId).orElse(null);
+    public Cart deleteFromCart(long userId,long itemId) {
+        CartEntity cart = cartRepository.findByUserId(userId).orElse(null);
+
         if (cart!= null) {
             cartRepository.deleteById(cart.getId());
         }
