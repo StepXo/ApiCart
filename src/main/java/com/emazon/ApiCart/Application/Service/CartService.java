@@ -29,7 +29,7 @@ public class CartService {
 
     public CartResponse deleteFromCart(long itemId) {
         Cart cart = cartsServicePort.deleteFromCart(itemId);
-        return cartHandler.toResponse(cart);
+        return this.addItemToCart(cart);
     }
 
     public CartResponse listAllCartItems(){
@@ -51,11 +51,11 @@ public class CartService {
 
         CartResponse response = cartHandler.toResponse(cart);
         List<ItemAuxDto> items = new ArrayList<>();
-
         for (int i = 0; i < cart.getItem().size(); i++) {
             Long itemId = cart.getItem().get(i);
             Long quantity = cart.getQuantity().get(i);
-            items.add(new ItemAuxDto(itemId, quantity, 0));
+            Double price = cart.getPrice().get(i);
+            items.add(new ItemAuxDto(itemId, quantity, price));
         }
 
         response.setItem(items);

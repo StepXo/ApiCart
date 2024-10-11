@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CartPersistencePort {
     Cart addToCart(Cart cart);
-    Cart deleteFromCart(long userId,long itemId);
+    Cart deleteFromCart(Cart cart,long itemId);
     Cart listAllCartItems(long userId);
     Cart getCart(long userId);
 }
