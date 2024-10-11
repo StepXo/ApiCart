@@ -11,9 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class CartResponse {
     private long id;
-    private List<ItemAuxDto> itemId;
+    private List<ItemAuxDto> item;
     private long userId;
-    private int quantity;
     private String actualizationDate;
     private String creationDate;
 }

@@ -26,12 +26,12 @@ public class CartController {
     }
 
     @GetMapping("/list")
-    private List<CartResponse> getCartItems(){
+    private CartResponse getCartItems(){
         return cartService.listAllCartItems();
     }
 
     @GetMapping("/{filter}")
-    private List<CartResponse> filterCartItems(@PathVariable String filter){
+    private CartResponse filterCartItems(@PathVariable String filter){
         return cartService.listAllCartItems(filter);
     }
 

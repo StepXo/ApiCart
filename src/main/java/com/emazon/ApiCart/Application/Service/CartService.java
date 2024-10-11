@@ -3,13 +3,17 @@ package com.emazon.ApiCart.Application.Service;
 import com.emazon.ApiCart.Application.Handler.CartHandler;
 import com.emazon.ApiCart.Application.Request.CartRequest;
 import com.emazon.ApiCart.Application.Response.CartResponse;
+import com.emazon.ApiCart.Application.Response.ItemAuxDto;
 import com.emazon.ApiCart.Domain.Api.CartServicePort;
 import com.emazon.ApiCart.Domain.Model.Cart;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +24,7 @@ public class CartService {
 
     public CartResponse addToCart(CartRequest request) {
         Cart cart = cartsServicePort.addToCart(cartHandler.toCart(request));
-        return cartHandler.toResponse(cart);
+        return this.addItemToCart(cart);
     }
 
     public CartResponse deleteFromCart(long itemId) {
@@ -28,23 +32,33 @@ public class CartService {
         return cartHandler.toResponse(cart);
     }
 
-    public List<CartResponse> listAllCartItems(){
-        List<CartResponse> cartResponses = cartsServicePort
-                .listAllCartItems()
-                .stream()
-                .map(cartHandler::toResponse)
-                .toList();
+    public CartResponse listAllCartItems(){
+        Cart cart = cartsServicePort.listAllCartItems();
 
-        return cartResponses;
+        return this.addItemToCart(cart);
+
     }
 
-    public List<CartResponse> listAllCartItems(String filter){
-        List<CartResponse> cartResponses = cartsServicePort
-                .listAllCartItems(filter)
-                .stream()
-                .map(cartHandler::toResponse)
-                .toList();
+    public CartResponse listAllCartItems(String filter){
+        Cart cart = cartsServicePort
+                .listAllCartItems(filter);
 
-        return cartResponses;    }
+        return this.addItemToCart(cart);
 
+    }
+
+    private CartResponse addItemToCart(Cart cart) {
+
+        CartResponse response = cartHandler.toResponse(cart);
+        List<ItemAuxDto> items = new ArrayList<>();
+
+        for (int i = 0; i < cart.getItem().size(); i++) {
+            Long itemId = cart.getItem().get(i);
+            Long quantity = cart.getQuantity().get(i);
+            items.add(new ItemAuxDto(itemId, quantity, 0));
+        }
+
+        response.setItem(items);
+        return response;
+    }
 }

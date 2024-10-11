@@ -31,12 +31,10 @@ public class CartJpa implements CartPersistencePort {
     }
 
     @Override
-    public List<Cart> listAllCartItems() {
-        return cartRepository
-                .findAll()
-                .stream()
+    public Cart listAllCartItems(long userId) {
+        return cartRepository.findByUserId(userId)
                 .map(mapper::toCart)
-                .toList();
+                .orElse(null);
     }
 
     @Override
