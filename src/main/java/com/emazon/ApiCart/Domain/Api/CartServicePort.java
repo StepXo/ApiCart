@@ -7,8 +7,8 @@ import java.util.List;
 public interface CartServicePort {
     Cart addToCart(Cart cart);
     Cart deleteFromCart(long itemId);
-    List<Cart> listAllCartItems();
-    List<Cart> listAllCartItems(String filter);
+    Cart listAllCartItems();
+    Cart listAllCartItems(String filter);
 
 
 }

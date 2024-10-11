@@ -4,15 +4,15 @@ import java.util.List;
 
 public class Cart {
     private long id;
-    private List<Item> itemId;
+    private List<Long> item;
     private long userId;
-    private int quantity;
+    private List<Long> quantity;
     private String actualizationDate;
     private String creationDate;
 
-    public Cart(long id, List<Item> itemId, long userId, int quantity, String actualizationDate, String creationDate) {
+    public Cart(long id, List<Long> item, long userId, List<Long> quantity, String actualizationDate, String creationDate) {
         this.id = id;
-        this.itemId = itemId;
+        this.item = item;
         this.userId = userId;
         this.quantity = quantity;
         this.actualizationDate = actualizationDate;
@@ -26,15 +26,15 @@ public class Cart {
         this.id = id;
     }
 
-    public void setItemId(List<Item> itemId) {
-        this.itemId = itemId;
+    public void setItem(List<Long> item) {
+        this.item = item;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(List<Long> quantity) {
         this.quantity = quantity;
     }
 
@@ -50,15 +50,15 @@ public class Cart {
         return id;
     }
 
-    public List<Item> getItemId() {
-        return itemId;
+    public List<Long> getItem() {
+        return item;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public int getQuantity() {
+    public List<Long> getQuantity() {
         return quantity;
     }
 
@@ -69,4 +69,5 @@ public class Cart {
     public String getCreationDate() {
         return creationDate;
     }
+
 }

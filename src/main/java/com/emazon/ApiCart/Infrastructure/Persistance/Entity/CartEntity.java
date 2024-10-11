@@ -16,12 +16,12 @@ public class CartEntity {
     @Id
     private long id;
 
-    private List<ItemEntity> itemId;
+    private List<Long> item;
 
     @Column(unique = true)
     private long userId;
 
-    private int quantity;
+    private List<Long> quantity;
 
     private String actualizationDate;
 

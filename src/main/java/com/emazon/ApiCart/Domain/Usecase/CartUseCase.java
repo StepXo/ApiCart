@@ -5,9 +5,9 @@ import com.emazon.ApiCart.Domain.Model.Cart;
 import com.emazon.ApiCart.Domain.Spi.CartPersistencePort;
 import com.emazon.ApiCart.Domain.Spi.StockFeignPort;
 import com.emazon.ApiCart.Domain.Spi.UserJwtPort;
+import com.emazon.ApiCart.Domain.Utils.Validations;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class CartUseCase implements CartServicePort {
 
@@ -23,23 +23,35 @@ public class CartUseCase implements CartServicePort {
 
     @Override
     public Cart addToCart(Cart cart) {
-        long userId = Long.parseLong(userJwt.extractUserId());
+
+        String user = userJwt.extractUserId();
+        Validations.validate(cart,user);
+
+        long userId = Long.parseLong(user);
         Cart repository = cartPersistencePort.getCart(userId);
+        Long currentItemId = cart.getItem().get(0);
+        Long currentQuantity = cart.getQuantity().get(0);
 
         if (repository == null) {
+            stockFeignPort.checkStock(currentItemId,currentQuantity);
             return createCart(cart, userId);
         }
-        if (!repository.getItemId().contains(cart.getItemId().get(0))) {
-            repository.getItemId().add(cart.getItemId().get(0));
+
+        int index = repository.getItem().indexOf(currentItemId);
+        if (index != -1) {
+            currentQuantity += repository.getQuantity().get(index);
+            repository.getQuantity().set(index, currentQuantity);
+        } else {
+            repository.getItem().add(currentItemId);
+            repository.getQuantity().add(currentQuantity);
         }
-        repository.setQuantity(repository.getQuantity() + cart.getQuantity());
+
+        stockFeignPort.checkStock(currentItemId, currentQuantity );
         repository.setActualizationDate(LocalDate.now().toString());
         return cartPersistencePort.addToCart(repository);
     }
 
     public Cart createCart(Cart cart, long userId) {
-
-        stockFeignPort.getById(cart.getItemId().get(0));
 
         cart.setUserId(userId);
         cart.setCreationDate(LocalDate.now().toString());
@@ -54,12 +66,15 @@ public class CartUseCase implements CartServicePort {
     }
 
     @Override
-    public List<Cart> listAllCartItems() {
-        return cartPersistencePort.listAllCartItems();
+    public Cart listAllCartItems() {
+        long userId = Long.parseLong(userJwt.extractUserId());
+        return cartPersistencePort.listAllCartItems(userId);
     }
 
     @Override
-    public List<Cart> listAllCartItems(String filter) {
-        return cartPersistencePort.listAllCartItems();
+    public Cart listAllCartItems(String filter) {
+        long userId = Long.parseLong(userJwt.extractUserId());
+
+        return cartPersistencePort.listAllCartItems(userId);
     }
 }
