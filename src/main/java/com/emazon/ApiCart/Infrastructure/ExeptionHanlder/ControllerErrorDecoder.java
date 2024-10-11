@@ -9,9 +9,7 @@ import feign.codec.ErrorDecoder;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @Component
 @Slf4j

@@ -8,8 +8,6 @@ import com.emazon.ApiCart.Infrastructure.Persistance.Repository.CartRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 public class CartJpa implements CartPersistencePort {
     private final CartMapper mapper;
@@ -21,13 +19,11 @@ public class CartJpa implements CartPersistencePort {
     }
 
     @Override
-    public Cart deleteFromCart(long userId,long itemId) {
-        CartEntity cart = cartRepository.findByUserId(userId).orElse(null);
+    public Cart deleteFromCart(Cart cart,long itemId) {
 
-        if (cart!= null) {
-            cartRepository.deleteById(cart.getId());
-        }
-        return mapper.toCart(cart);
+        CartEntity cartEntity = mapper.toCartEntity(cart);
+        cartEntity.getItem().remove(itemId);
+        return mapper.toCart( cartRepository.save(cartEntity));
     }
 
     @Override

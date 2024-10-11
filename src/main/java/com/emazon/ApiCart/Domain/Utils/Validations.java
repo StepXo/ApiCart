@@ -36,4 +36,9 @@ public class Validations {
         validateQuantity(cart.getQuantity().get(0));
         validateUser(user);
     }
+
+    public static void validate(long id, String user){
+        validateItem(id);
+        validateUser(user);
+    }
 }

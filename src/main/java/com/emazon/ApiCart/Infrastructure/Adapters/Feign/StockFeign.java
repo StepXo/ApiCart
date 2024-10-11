@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 public class StockFeign implements StockFeignPort {
     private final IStockFeign stock;
     @Override
-    public Long checkStock(Long item,long quantity) {
-        return  stock.checkStock(item,quantity).getId();
+    public double checkStock(Long item,long quantity) {
+        return  stock.checkStock(item,quantity).getPrice();
     }
 }

@@ -7,14 +7,16 @@ public class Cart {
     private List<Long> item;
     private long userId;
     private List<Long> quantity;
+    private List<Double> price;
     private String actualizationDate;
     private String creationDate;
 
-    public Cart(long id, List<Long> item, long userId, List<Long> quantity, String actualizationDate, String creationDate) {
+    public Cart(long id, List<Long> item, long userId, List<Long> quantity, List<Double> price, String actualizationDate, String creationDate) {
         this.id = id;
         this.item = item;
         this.userId = userId;
         this.quantity = quantity;
+        this.price = price;
         this.actualizationDate = actualizationDate;
         this.creationDate = creationDate;
     }
@@ -42,6 +44,10 @@ public class Cart {
         this.actualizationDate = actualizationDate;
     }
 
+    public void setPrice(List<Double> price) {
+        this.price = price;
+    }
+
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
@@ -56,6 +62,10 @@ public class Cart {
 
     public long getUserId() {
         return userId;
+    }
+
+    public List<Double> getPrice() {
+        return price;
     }
 
     public List<Long> getQuantity() {
