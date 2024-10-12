@@ -44,6 +44,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(InfraConstants.MESSAGE, ExceptionResponse.CART_IS_NULL.getMessage()));
     }
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<Map<String, String>> emptyCartException(
+            EmptyCartException emptyCartException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(InfraConstants.MESSAGE, ExceptionResponse.EMPTY_CART.getMessage()));
+    }
     @ExceptionHandler(QuantityIsNotEnough.class)
     public ResponseEntity<Map<String, String>> quantityIsNotEnough(
             QuantityIsNotEnough quantityIsNotEnough) {

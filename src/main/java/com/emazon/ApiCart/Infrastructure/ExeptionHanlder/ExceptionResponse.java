@@ -8,7 +8,7 @@ public enum ExceptionResponse {
     INVALID_QUANTITY("The quantity must be greater than or equal to 1"),
     INVALID_USER("The user must not be null or empty"),
     CART_IS_NULL("The cart cannot be null"),
-
+    EMPTY_CART("The cart is empty")
     ;
 
 

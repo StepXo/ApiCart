@@ -8,7 +8,5 @@ public interface CartServicePort {
     Cart addToCart(Cart cart);
     Cart deleteFromCart(long itemId);
     Cart listAllCartItems();
-    Cart listAllCartItems(String filter);
-
 
 }
