@@ -22,7 +22,6 @@ public class CartEntity {
     private long userId;
 
     private List<Long> quantity;
-    private List<Double> price;
 
     private String actualizationDate;
 

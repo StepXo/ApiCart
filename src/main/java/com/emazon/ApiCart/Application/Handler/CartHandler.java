@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public interface CartHandler {
     @Mapping(source = "quantity", target = "quantity", qualifiedByName = "convertIdToList")
     Cart toCart(CartRequest request);
 
-    @Mapping(target = "item", ignore = true)
+    @Mapping(target = "item",ignore = true)
+    @Mapping(target = "total",ignore = true)
     CartResponse toResponse(Cart cart);
 
     @Named("convertIdToList")
