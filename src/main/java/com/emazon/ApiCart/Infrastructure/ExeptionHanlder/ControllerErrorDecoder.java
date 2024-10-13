@@ -2,6 +2,7 @@ package com.emazon.ApiCart.Infrastructure.ExeptionHanlder;
 
 import com.emazon.ApiCart.Domain.Exeptions.ItemNotFoundException;
 import com.emazon.ApiCart.Domain.Exeptions.QuantityIsNotEnough;
+import com.emazon.ApiCart.Infrastructure.Utils.InfraConstants;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
@@ -21,10 +22,10 @@ public class ControllerErrorDecoder implements ErrorDecoder {
     public Exception decode(String methodKey, Response response) {
         try {
             JsonNode errorBody = objectMapper.readTree(response.body().asInputStream());
-            String errorMessage = errorBody.path("Message").asText();
-            if (errorMessage.contains("No item was found with that name")) {
+            String errorMessage = errorBody.path(InfraConstants.MESSAGE).asText();
+            if (errorMessage.contains(InfraConstants.ITEM_NOT_FOUND)) {
                 return new ItemNotFoundException();
-            } else if (errorMessage.contains("The quantity is not available")) {
+            } else if (errorMessage.contains(InfraConstants.QUANTITY_IS_NOT_ENOUGH)) {
                 return new QuantityIsNotEnough();
             } else {
                 return new BadRequestException();

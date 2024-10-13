@@ -2,6 +2,7 @@ package com.emazon.ApiCart.Infrastructure.Adapters.SecurityConfig;
 
 
 import com.emazon.ApiCart.Infrastructure.Adapters.SecurityConfig.jwtconfiguration.JwtAuthenticationFilter;
+import com.emazon.ApiCart.Infrastructure.Utils.InfraConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.emazon.ApiCart.Infrastructure.Utils.InfraConstants.ROLE_ADMIN;
+import static com.emazon.ApiCart.Infrastructure.Utils.InfraConstants.ROLE_USER;
 
 @Configuration
 @EnableWebSecurity
@@ -27,9 +31,10 @@ public class ConfigFilter {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("").hasAnyRole("")
-                        //.anyRequest().authenticated())
-                        .anyRequest().permitAll())
+                        .requestMatchers(InfraConstants.DELETE).hasAnyRole(ROLE_USER,ROLE_ADMIN)
+                        .requestMatchers(InfraConstants.ORDER).hasAnyRole(ROLE_USER,ROLE_ADMIN)
+                        .requestMatchers(InfraConstants.TYPE_ORDER).hasAnyRole(ROLE_USER,ROLE_ADMIN)
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -1,14 +1,14 @@
 package com.emazon.ApiCart.Domain.Usecase;
 
 import com.emazon.ApiCart.Domain.Api.CartServicePort;
-import com.emazon.ApiCart.Domain.Exeptions.EmptyCartException;
 import com.emazon.ApiCart.Domain.Model.Cart;
 import com.emazon.ApiCart.Domain.Spi.CartPersistencePort;
 import com.emazon.ApiCart.Domain.Spi.StockFeignPort;
 import com.emazon.ApiCart.Domain.Spi.UserJwtPort;
 import com.emazon.ApiCart.Domain.Utils.Validations;
-
 import java.time.LocalDate;
+
+import static com.emazon.ApiCart.Domain.Utils.DomConstants.*;
 
 public class CartUseCase implements CartServicePort {
 
@@ -30,24 +30,27 @@ public class CartUseCase implements CartServicePort {
 
         long userId = Long.parseLong(user);
         Cart repository = cartPersistencePort.getCart(userId);
-        long currentItemId = cart.getItem().get(0);
+        long currentItemId = cart.getItem().get(FIRST);
+        long currentQuantity = cart.getQuantity().get(FIRST);
+
 
         if (repository == null) {
 
-            stockFeignPort.checkStock(currentItemId, cart.getQuantity().get(0));
+            stockFeignPort.checkStock(currentItemId, currentQuantity);
             return createCart(cart, userId);
         }
 
         int index = repository.getItem().indexOf(currentItemId);
-        long currentQuantity = cart.getQuantity().get(0);
-        if (index != -1) {
-            currentQuantity += + repository.getQuantity().get(index);
+        if (index != NOT_FOUND) {
+            currentQuantity += repository.getQuantity().get(index);
         }
 
         stockFeignPort.checkStock(currentItemId, currentQuantity);
-        Cart currentItem = this.setItem(repository, index, currentItemId, currentQuantity);
+
+        Cart currentItem = setItem(repository, index, currentItemId, currentQuantity);
         currentItem.setActualizationDate(LocalDate.now().toString());
         return cartPersistencePort.addToCart(currentItem);
+
     }
 
     public Cart createCart(Cart cart, long userId) {
@@ -59,6 +62,18 @@ public class CartUseCase implements CartServicePort {
         return cartPersistencePort.addToCart(cart);
     }
 
+    private Cart setItem(Cart cart, int index, long item, long quantity) {
+
+
+        if (index != NOT_FOUND) {
+            cart.getQuantity().set(index, quantity);
+        } else {
+            cart.getItem().add(item);
+            cart.getQuantity().add(quantity);
+        }
+        return cart;
+    }
+
     @Override
     public Cart deleteFromCart(long itemId) {
 
@@ -68,6 +83,8 @@ public class CartUseCase implements CartServicePort {
         long userId = Long.parseLong(user);
         Cart cart = cartPersistencePort.getCart(userId);
 
+        Validations.validate(cart);
+
         cart.setActualizationDate(LocalDate.now().toString());
         return cartPersistencePort.deleteFromCart(cart,itemId);
     }
@@ -75,22 +92,11 @@ public class CartUseCase implements CartServicePort {
     @Override
     public Cart listAllCartItems() {
         long userId = Long.parseLong(userJwt.extractUserId());
+
         Cart cart = cartPersistencePort.listAllCartItems(userId);
-        if (cart == null || cart.getItem() == null) {
-            throw new EmptyCartException();
-        }
+        Validations.validate(cart);
+
         return cart;
     }
 
-    private Cart setItem(Cart cart, int index, long item, long quantity) {
-
-
-        if (index != -1) {
-            cart.getQuantity().set(index, quantity);
-        } else {
-            cart.getItem().add(item);
-            cart.getQuantity().add(quantity);
-        }
-        return cart;
-    }
 }

@@ -3,6 +3,8 @@ package com.emazon.ApiCart.Domain.Utils;
 import com.emazon.ApiCart.Domain.Exeptions.*;
 import com.emazon.ApiCart.Domain.Model.Cart;
 
+import static com.emazon.ApiCart.Domain.Utils.DomConstants.FIRST;
+
 public class Validations {
     private static void validateItem(long id) {
         if ( id == 0) {
@@ -23,22 +25,28 @@ public class Validations {
     }
     private static void validateCart(Cart cart) {
         if (cart == null) {
-            throw new CartIsNullExeption();
+            throw new CartIsNullException();
         }
+
         if (cart.getItem().isEmpty() || cart.getQuantity().isEmpty()) {
-            throw new ItemNotFoundException();
+            throw new EmptyCartException();
         }
     }
 
     public static void validate(Cart cart, String user){
         validateCart(cart);
-        validateItem(cart.getItem().get(0));
-        validateQuantity(cart.getQuantity().get(0));
+        validateItem(cart.getItem().get(FIRST));
+        validateQuantity(cart.getQuantity().get(FIRST));
         validateUser(user);
     }
 
     public static void validate(long id, String user){
         validateItem(id);
         validateUser(user);
+    }
+
+    public static void validate(Cart cart){
+        validateCart(cart);
+
     }
 }

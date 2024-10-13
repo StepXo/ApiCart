@@ -19,7 +19,7 @@ public class FilterUtil {
 
         for (ItemAuxDto item : items) {
 
-            if ("category".equalsIgnoreCase(filter)) {
+            if (AppConstants.CATEGORY.equalsIgnoreCase(filter)) {
                 for (CategoryDto category : item.getCategory()) {
                     if (category.getName().equalsIgnoreCase(name)) {
                         filteredItems.add(item);
@@ -27,7 +27,7 @@ public class FilterUtil {
                     }
                 }
 
-            } else if ("brand".equalsIgnoreCase(filter) && item.getBrand().getName().equalsIgnoreCase(name)) {
+            } else if (AppConstants.BRAND.equalsIgnoreCase(filter) && item.getBrand().getName().equalsIgnoreCase(name)) {
                 filteredItems.add(item);
             }
         }

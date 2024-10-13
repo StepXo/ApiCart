@@ -34,7 +34,13 @@ public class JwtService {
 
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
+        if (token == null) {
+            return false;
+        }
         final String userId = extractUserId(token);
+        if (userId == null || userDetails.getUsername() == null) {
+            return false;
+        }
         return (userId.equals(String.valueOf(userDetails.getUsername())));
     }
 

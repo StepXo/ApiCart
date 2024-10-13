@@ -1,6 +1,5 @@
 package com.emazon.ApiCart.Infrastructure.Input;
 
-import com.emazon.ApiCart.Application.Response.ItemAuxDto;
 import com.emazon.ApiCart.Application.Service.CartService;
 import com.emazon.ApiCart.Application.Request.CartRequest;
 import com.emazon.ApiCart.Application.Response.CartResponse;
@@ -9,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping(InfraConstants.CART)
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
@@ -19,12 +18,12 @@ public class CartController {
         return cartService.addToCart(request);
     }
 
-    @PostMapping("/delete")
+    @PostMapping(InfraConstants.DELETE)
     private CartResponse deleteFromCart(@RequestBody CartRequest request){
         return cartService.deleteFromCart(request.getItemId());
     }
 
-    @GetMapping("/list/{order}")
+    @GetMapping(InfraConstants.ORDER)
     private CartResponse getCartItems(
             @PathVariable String order,
             @RequestParam(defaultValue = InfraConstants.ZERO) int page,
@@ -32,11 +31,11 @@ public class CartController {
         return cartService.listAllCartItems(order, page, size);
     }
 
-    @GetMapping("/list/{order}/{filter}/{name}")
+    @GetMapping(InfraConstants.TYPE_ORDER)
     private CartResponse filterCartItems(
             @PathVariable String order,
             @PathVariable String filter,
-            @PathVariable String name,
+            @RequestParam String name,
             @RequestParam(defaultValue = InfraConstants.ZERO) int page,
             @RequestParam(defaultValue = InfraConstants.TEN) int size){
         return cartService.listAllCartItems(order,filter,name, page, size);

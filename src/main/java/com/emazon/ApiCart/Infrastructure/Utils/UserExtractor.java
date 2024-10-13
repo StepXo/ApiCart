@@ -24,8 +24,8 @@ public class UserExtractor implements UserJwtPort {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
-            String authHeader = request.getHeader("Authorization");
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String authHeader = request.getHeader(InfraConstants.AUTHORIZATION);
+            if (authHeader != null && authHeader.startsWith(InfraConstants.BEARER)) {
                 return authHeader.substring(7);
             }
         }

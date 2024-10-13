@@ -38,9 +38,9 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(InfraConstants.MESSAGE, ExceptionResponse.INVALID_USER.getMessage()));
     }
-    @ExceptionHandler(CartIsNullExeption.class)
+    @ExceptionHandler(CartIsNullException.class)
     public ResponseEntity<Map<String, String>> cartIsNullExeption(
-            CartIsNullExeption cartIsNullExeption) {
+            CartIsNullException cartIsNullException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(InfraConstants.MESSAGE, ExceptionResponse.CART_IS_NULL.getMessage()));
     }

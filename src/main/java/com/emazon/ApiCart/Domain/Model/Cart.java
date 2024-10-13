@@ -1,12 +1,13 @@
 package com.emazon.ApiCart.Domain.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
     private long id;
-    private List<Long> item;
+    private List<Long> item = new ArrayList<>();
     private long userId;
-    private List<Long> quantity;
+    private List<Long> quantity = new ArrayList<>();
     private String actualizationDate;
     private String creationDate;
 
