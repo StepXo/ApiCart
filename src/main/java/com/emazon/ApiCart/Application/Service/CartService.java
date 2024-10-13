@@ -42,7 +42,7 @@ public class CartService {
         return this.addItemToCart(cart);
     }
 
-    public CartResponse listAllCartItems(String order, int page, int size) {
+    public CartResponse listAllCart(String order, int page, int size) {
         Cart cart = cartsServicePort.listAllCartItems();
         CartResponse response = this.addItemToCart(cart);
         List<ItemAuxDto> items = sorterUtil.orderItems(response.getItem().getContent(), order);
@@ -51,7 +51,7 @@ public class CartService {
         return response;
     }
 
-    public CartResponse listAllCartItems(String order, String filter, String name, int page, int size) {
+    public CartResponse listAllCart(String order, String filter, String name, int page, int size) {
         Cart cart = cartsServicePort.listAllCartItems();
         CartResponse response = this.addItemToCart(cart);
 
@@ -84,5 +84,9 @@ public class CartService {
         response.setItem(new PageImpl<>(items));
         response.setTotal(total);
         return response;
+    }
+
+    public CartResponse buy() {
+        return cartHandler.toResponse(cartsServicePort.buy());
     }
 }

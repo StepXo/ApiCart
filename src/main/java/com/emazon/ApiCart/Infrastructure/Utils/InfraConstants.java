@@ -15,6 +15,8 @@ public class InfraConstants {
     public static final String DELETE = "/delete";
     public static final String ORDER = "/{order}";
     public static final String TYPE_ORDER = "/{order}/{variable}";
+    public static final String BUY = "/buy";
+
     public static final String ITEM_NOT_FOUND = "No item was found with that name";
     public static final String QUANTITY_IS_NOT_ENOUGH = "The quantity is not available";
     public static final String ROLE_ADMIN = "ADMIN";

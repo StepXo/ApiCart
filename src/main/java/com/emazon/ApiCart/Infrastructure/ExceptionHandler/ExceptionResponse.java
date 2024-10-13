@@ -1,4 +1,4 @@
-package com.emazon.ApiCart.Infrastructure.ExeptionHanlder;
+package com.emazon.ApiCart.Infrastructure.ExceptionHandler;
 
 
 public enum ExceptionResponse {

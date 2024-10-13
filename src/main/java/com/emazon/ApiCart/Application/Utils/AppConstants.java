@@ -4,7 +4,9 @@ public final class AppConstants {
     public static final String EMPTY_STRING = "";
 
     public static final String SPRING = "Spring";
+    public static final String ITEM = "item";
     public static final String ITEM_ID = "itemId";
+
     public static final String QUANTITY = "quantity";
     public static final String MAP_TO_LIST = "mapToList";
     public static final String TOTAL = "total";

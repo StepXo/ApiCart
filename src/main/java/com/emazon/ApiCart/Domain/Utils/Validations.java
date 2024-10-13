@@ -47,6 +47,9 @@ public class Validations {
 
     public static void validate(Cart cart){
         validateCart(cart);
+    }
 
+    public static void validate(String user){
+        validateUser(user);
     }
 }

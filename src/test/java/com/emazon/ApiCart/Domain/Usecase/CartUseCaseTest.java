@@ -88,7 +88,7 @@ class CartUseCaseTest {
 
         when(userJwt.extractUserId()).thenReturn("1");
         when(cartPersistencePort.getCart(1L)).thenReturn(null);
-        doThrow(new QuantityIsNotEnough()).when(stockFeignPort).checkStock(anyLong(), anyLong());
+        doThrow(new QuantityIsNotEnough(errorMessage)).when(stockFeignPort).checkStock(anyLong(), anyLong());
 
         assertThrows(QuantityIsNotEnough.class, () -> cartUseCase.addToCart(cart));
         verify(stockFeignPort, times(1)).checkStock(anyLong(), anyLong());

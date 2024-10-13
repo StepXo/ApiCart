@@ -9,6 +9,7 @@ import feign.FeignException;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 public class StockFeign implements StockFeignPort {
@@ -22,14 +23,12 @@ public class StockFeign implements StockFeignPort {
             stock.checkStock(item, quantity);
         } catch (FeignException.NotFound e) {
             throw new ItemNotFoundException();
-        } catch (FeignException.InternalServerError | FeignException.BadRequest e) {
-            throw new QuantityIsNotEnough();
         }
     }
 
     @Override
     public List<Item> getItemsByList(List<Long> list) {
-        return stock.getItemsByList(list).stream()
+        return Objects.requireNonNull(stock.getItemsByList(list).getBody()).stream()
                 .map(itemMapper::toItem)
                 .toList();
     }

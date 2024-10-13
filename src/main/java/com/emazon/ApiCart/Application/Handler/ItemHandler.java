@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = AppConstants.TOTAL)
+@Mapper(componentModel = AppConstants.SPRING)
 public interface ItemHandler {
 
     ItemAuxDto toItemAux(Item request);

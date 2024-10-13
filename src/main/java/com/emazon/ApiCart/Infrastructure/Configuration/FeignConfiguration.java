@@ -1,6 +1,6 @@
 package com.emazon.ApiCart.Infrastructure.Configuration;
 
-import com.emazon.ApiCart.Infrastructure.ExeptionHanlder.ControllerErrorDecoder;
+import com.emazon.ApiCart.Infrastructure.ExceptionHandler.ControllerErrorDecoder;
 import com.emazon.ApiCart.Infrastructure.Utils.InfraConstants;
 import com.emazon.ApiCart.Infrastructure.Utils.UserExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
