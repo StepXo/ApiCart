@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.emazon.ApiCart.Application.Utils.AppConstants.ZERO;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -68,8 +70,8 @@ public class CartService {
                 .map(itemHandler::toItemAux)
                 .toList();
 
-        double total = 0;
-        for (int i = 0; i < items.size(); i++) {
+        double total = ZERO;
+        for (int i = ZERO; i < items.size(); i++) {
             Long quantity = cart.getQuantity().get(i);
             Double price = items.get(i).getPrice();
 

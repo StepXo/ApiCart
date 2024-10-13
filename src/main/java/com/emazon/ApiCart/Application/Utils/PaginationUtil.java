@@ -14,16 +14,18 @@ import java.util.List;
 public class PaginationUtil {
 
     public Page<ItemAuxDto> getItemsPagination(String order, int page, int size, List<ItemAuxDto> sortedItemDto) {
-        Sort sort = "asc".equalsIgnoreCase(order)
-                ? Sort.by("name").ascending()
-                : Sort.by("name").descending();
+        Sort sort = AppConstants.ORDER.equalsIgnoreCase(order)
+                ? Sort.by(AppConstants.NAME).ascending()
+                : Sort.by(AppConstants.NAME).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
         int start = (int) pageable.getOffset();
+        if (start >= sortedItemDto.size()) {
+            return new PageImpl<>(List.of(), pageable, sortedItemDto.size());
+        }
+
         int end = Math.min(start + pageable.getPageSize(), sortedItemDto.size());
 
         return new PageImpl<>(sortedItemDto.subList(start, end), pageable, sortedItemDto.size());
     }
-
-    // Otros métodos existentes para marcas y categorías
 }
