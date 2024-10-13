@@ -107,7 +107,7 @@ public class CartUseCase implements CartServicePort {
         long userId = Long.parseLong(user);
         Cart cart = cartPersistencePort.getCart(userId);
         cart.setItem(new ArrayList<>());
-        return cart;
+        return cartPersistencePort.addToCart(cart);
     }
 
 }

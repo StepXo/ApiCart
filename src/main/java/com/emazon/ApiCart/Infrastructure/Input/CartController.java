@@ -41,7 +41,7 @@ public class CartController {
             @RequestParam(defaultValue = InfraConstants.TEN) int size){
         return ResponseEntity.ok(cartService.listAllCart(order,filter,name, page, size));
     }
-    @GetMapping(InfraConstants.BUY)
+    @PostMapping(InfraConstants.BUY)
     private ResponseEntity<CartResponse> buy(){
         return ResponseEntity.ok(cartService.buy());
     }
