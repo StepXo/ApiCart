@@ -1,4 +1,4 @@
-package com.emazon.ApiCart.Infrastructure.ExeptionHanlder;
+package com.emazon.ApiCart.Infrastructure.ExceptionHandler;
 
 import com.emazon.ApiCart.Domain.Exeptions.ItemNotFoundException;
 import com.emazon.ApiCart.Domain.Exeptions.QuantityIsNotEnough;
@@ -26,7 +26,8 @@ public class ControllerErrorDecoder implements ErrorDecoder {
             if (errorMessage.contains(InfraConstants.ITEM_NOT_FOUND)) {
                 return new ItemNotFoundException();
             } else if (errorMessage.contains(InfraConstants.QUANTITY_IS_NOT_ENOUGH)) {
-                return new QuantityIsNotEnough();
+                System.out.println(errorMessage);
+                return new QuantityIsNotEnough(errorMessage);
             } else {
                 return new BadRequestException();
             }

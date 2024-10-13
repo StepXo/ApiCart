@@ -7,6 +7,7 @@ import com.emazon.ApiCart.Domain.Spi.StockFeignPort;
 import com.emazon.ApiCart.Domain.Spi.UserJwtPort;
 import com.emazon.ApiCart.Domain.Utils.Validations;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static com.emazon.ApiCart.Domain.Utils.DomConstants.*;
 
@@ -96,6 +97,16 @@ public class CartUseCase implements CartServicePort {
         Cart cart = cartPersistencePort.listAllCartItems(userId);
         Validations.validate(cart);
 
+        return cart;
+    }
+
+    @Override
+    public Cart buy() {
+        String user = userJwt.extractUserId();
+        Validations.validate(user);
+        long userId = Long.parseLong(user);
+        Cart cart = cartPersistencePort.getCart(userId);
+        cart.setItem(new ArrayList<>());
         return cart;
     }
 

@@ -9,4 +9,5 @@ public interface CartServicePort {
     Cart deleteFromCart(long itemId);
     Cart listAllCartItems();
 
+    Cart buy();
 }

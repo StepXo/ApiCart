@@ -95,14 +95,14 @@ class CartServiceTest {
     }
 
     @Test
-    void listAllCartItems_Success() {
+    void listAllCart_Success() {
 
         when(cartServicePort.listAllCartItems()).thenReturn(cart);
         when(cartHandler.toResponse(cart)).thenReturn(response);
         when(sorterUtil.orderItems(anyList(), anyString())).thenReturn(items);
         when(paginationUtil.getItemsPagination(anyString(), anyInt(), anyInt(), anyList())).thenReturn(new PageImpl<>(items));
 
-        CartResponse result = cartService.listAllCartItems("asc", 0, 5);
+        CartResponse result = cartService.listAllCart("asc", 0, 5);
 
         assertNotNull(result);
         verify(cartServicePort).listAllCartItems();
@@ -110,7 +110,7 @@ class CartServiceTest {
         verify(paginationUtil).getItemsPagination(anyString(), anyInt(), anyInt(), anyList());
     }
     @Test
-    void listAllCartItems_WithFilterAndPagination_Success() {
+    void listAllCart_WithFilterAndPagination_Success() {
         // Arrange
         String order = "asc";
         String filter = "name";
@@ -125,7 +125,7 @@ class CartServiceTest {
         when(sorterUtil.orderItems(filteredItems, order)).thenReturn(sortedItems);
         when(paginationUtil.getItemsPagination(order, page, size, sortedItems)).thenReturn(paginatedItems);
 
-        CartResponse result = cartService.listAllCartItems(order, filter, name, page, size);
+        CartResponse result = cartService.listAllCart(order, filter, name, page, size);
 
         assertNotNull(result);
         assertEquals(paginatedItems, result.getItem());

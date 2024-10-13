@@ -1,4 +1,4 @@
-package com.emazon.ApiCart.Infrastructure.ExeptionHanlder;
+package com.emazon.ApiCart.Infrastructure.ExceptionHandler;
 
 import com.emazon.ApiCart.Domain.Exeptions.*;
 import com.emazon.ApiCart.Infrastructure.Utils.InfraConstants;
@@ -54,7 +54,7 @@ public class ControllerAdvisor {
     public ResponseEntity<Map<String, String>> quantityIsNotEnough(
             QuantityIsNotEnough quantityIsNotEnough) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Collections.singletonMap(InfraConstants.MESSAGE, ExceptionResponse.QUANTITY_IS_NOT_ENOUGH.getMessage()));
+                .body(Collections.singletonMap(InfraConstants.MESSAGE, quantityIsNotEnough.getMessage()));
     }
 
 }

@@ -15,11 +15,11 @@ import java.util.List;
 @Mapper(componentModel = AppConstants.SPRING)
 public interface CartHandler {
 
-    @Mapping(source = AppConstants.ITEM_ID, target = AppConstants.ITEM_ID, qualifiedByName = AppConstants.MAP_TO_LIST)
+    @Mapping(source = AppConstants.ITEM_ID, target = AppConstants.ITEM, qualifiedByName = AppConstants.MAP_TO_LIST)
     @Mapping(source = AppConstants.QUANTITY, target = AppConstants.QUANTITY, qualifiedByName = AppConstants.MAP_TO_LIST)
     Cart toCart(CartRequest request);
 
-    @Mapping(target = AppConstants.ITEM_ID,ignore = true)
+    @Mapping(target = AppConstants.ITEM,ignore = true)
     @Mapping(target = AppConstants.TOTAL,ignore = true)
     CartResponse toResponse(Cart cart);
 
