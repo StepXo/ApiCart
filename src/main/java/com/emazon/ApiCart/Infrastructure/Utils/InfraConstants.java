@@ -10,8 +10,13 @@ public class InfraConstants {
     public static final String AUTHORIZATION = "Authorization";
     public static final String MESSAGE = "Message";
     public static final String USER_API = "Api-User";
+    public static final String STOCK_API = "Api-Stock";
+    public static final String TABLE_CART = "CART";
+
     public static final String USER = "/{id}";
     public static final String CART = "/cart";
+    public static final String CHECK = "/cart/{id}";
+
     public static final String DELETE = "/delete";
     public static final String ORDER = "/{order}";
     public static final String TYPE_ORDER = "/{order}/{variable}";

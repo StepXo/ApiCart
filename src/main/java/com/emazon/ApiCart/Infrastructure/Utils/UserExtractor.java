@@ -22,12 +22,13 @@ public class UserExtractor implements UserJwtPort {
 
     public String getTokenFromRequest() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
-            HttpServletRequest request = attributes.getRequest();
-            String authHeader = request.getHeader(InfraConstants.AUTHORIZATION);
-            if (authHeader != null && authHeader.startsWith(InfraConstants.BEARER)) {
-                return authHeader.substring(7);
-            }
+        if (attributes == null) {
+            return null;
+        }
+        HttpServletRequest request = attributes.getRequest();
+        String authHeader = request.getHeader(InfraConstants.AUTHORIZATION);
+        if (authHeader != null && authHeader.startsWith(InfraConstants.BEARER)) {
+            return authHeader.substring(7);
         }
         return null;
     }
