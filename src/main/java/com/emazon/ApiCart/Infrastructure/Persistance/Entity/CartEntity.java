@@ -1,5 +1,6 @@
 package com.emazon.ApiCart.Infrastructure.Persistance.Entity;
 
+import com.emazon.ApiCart.Infrastructure.Utils.InfraConstants;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Table(name = InfraConstants.TABLE_CART)
 @Entity
 @Data
 @NoArgsConstructor
